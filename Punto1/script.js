@@ -2,7 +2,7 @@ async function sendToGemini() {
             const inputText = document.getElementById('inputText').value;
             const responseContainer = document.getElementById('responseContainer');
             const loader = document.getElementById('loader');
-            const apiKey = "";
+            const apiKey = "AIzaSyCqRRtLSaWmA1Ad-T6x-feOgPX_uBvhZyU";
 
             if (!inputText.trim()) {
                 responseContainer.textContent = "Por favor, ingresa algún texto.";
@@ -24,7 +24,7 @@ async function sendToGemini() {
                     {
                         "parts": [
                             {
-                                "text": inputText
+                               "text": `¿Este comentario es positivo o negativo? Responde solo con la palabra 'positivo' o 'negativo' o 'ninguno'. Comentario: ${inputText}`
                             }
                         ]
                     }
@@ -52,7 +52,28 @@ async function sendToGemini() {
                 const data = await response.json();
 
                 if (data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
-                    responseContainer.textContent = data.candidates[0].content.parts[0].text;
+                    let respuesta = data.candidates[0].content.parts[0].text.toLowerCase();
+
+                    if(respuesta.includes("positivo")){
+                        Swal.fire({
+                        title: "El comentario es:",
+                        text:"POSITIVO"
+                        });
+                    } else if (respuesta.includes("negativo")){
+                        responseContainer.textContent= "El comentario es negativo";
+                        Swal.fire({
+                        title: "El comentario es:",
+                        text:"NEGATIVO"
+                        });
+                    } else {
+                        responseContainer.textContent= "El comentario no es nni negativo ni positivo";
+                        Swal.fire({
+                        title: "El comentario no es:",
+                        text:"NEGATIVO ni POSITIVO"
+                        })
+
+                    }
+                    
                 } else if (data.promptFeedback && data.promptFeedback.blockReason) {
                     responseContainer.textContent = `Solicitud bloqueada: ${data.promptFeedback.blockReason}. Razón: ${data.promptFeedback.blockReasonMessage || 'No se proporcionó un mensaje específico.'}`;
                 }
