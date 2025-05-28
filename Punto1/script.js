@@ -83,7 +83,7 @@ async function sendToGemini() {
                 }
 
             } catch (error) {
-                loader.style.display = 'none'; // Ocultar loader
+                loader.style.display = 'none';
                 console.error("Error en la solicitud fetch:", error);
                 responseContainer.textContent = "Error al conectar con la API. Revisa la consola para más detalles.";
             }
