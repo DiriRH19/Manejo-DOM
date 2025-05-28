@@ -14,8 +14,8 @@ async function sendToGemini() {
                 return;
             }
 
-            responseContainer.textContent = ""; // Limpiar respuesta anterior
-            loader.style.display = 'block'; // Mostrar loader
+            responseContainer.textContent = ""; 
+            loader.style.display = 'block'; 
 
             const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
@@ -40,7 +40,7 @@ async function sendToGemini() {
                     body: JSON.stringify(requestBody)
                 });
 
-                loader.style.display = 'none'; // Ocultar loader
+                loader.style.display = 'none'; 
 
                 if (!response.ok) {
                     const errorData = await response.json();
